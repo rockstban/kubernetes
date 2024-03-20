@@ -1,0 +1,36 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: pruebas
+spec:
+  selector:
+    app: esteban
+  type: LoadBalancer
+  ports:
+    - protocol: 'TCP'
+      port: 80
+      targetPort: 3000
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gabriel
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: esteban
+  template:
+    metadata:
+      labels:
+        app: esteban
+    spec:
+      containers:
+        - name: lopez
+          image: rockstban/volume-kubernetes:1.01
+          volumeMounts:
+            - mountPath: /app/story
+              name: story-volume
+      volumes:
+        - name: story-volume
+          emptyDir: {}
