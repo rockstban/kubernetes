@@ -16,7 +16,7 @@ kind: Deployment
 metadata:
   name: gabriel
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: esteban
@@ -33,4 +33,6 @@ spec:
               name: story-volume
       volumes:
         - name: story-volume
-          emptyDir: {}
+          hostPath: 
+            path: /data
+            type: DirectoryOrCreate
