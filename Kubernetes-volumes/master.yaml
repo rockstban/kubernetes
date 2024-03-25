@@ -27,12 +27,20 @@ spec:
     spec:
       containers:
         - name: lopez
-          image: rockstban/volume-kubernetes:1.01
+          image: rockstban/volume-kubernetes:1.2
+          env:
+           # - name: STORY_FOLDER
+            #  value: 'esteban'
+            - name: STORY_FOLDER
+              valueFrom: 
+                configMapKeyRef: 
+                  name: esteban-environment
+                  key: folder
           volumeMounts:
-            - mountPath: /app/story
+            - mountPath: /app/esteban
               name: story-volume
       volumes:
         - name: story-volume
-          hostPath: 
-            path: /data
-            type: DirectoryOrCreate
+          persistentVolumeClaim:
+            claimName: esteban-pvc
+            
