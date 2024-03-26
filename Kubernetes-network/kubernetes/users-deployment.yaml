@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  name: users-deploy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: user
+  template:
+    metadata:
+      labels:
+        app: user
+    spec:
+      containers:
+        - name: network-users
+          image: rockstban/network-kube:latest
+          env:
+            - name: AUTH_ADDRESS
+              value: localhost
+        - name: network-auth
+          image: rockstban/auth-kubernetes:latest
+    
